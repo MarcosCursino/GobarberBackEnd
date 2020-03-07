@@ -4,11 +4,19 @@ import multerConfig from './config/multer';
 
 import UserController from './app/controllers/UserController';
 import SessionController from './app/controllers/SessionController';
+import FileControlller from './app/controllers/FileControlller';
+import ProviderController from './app/controllers/ProviderController';
 
 import authMiddleware from './app/middlewares/auth';
+import AppointmentController from './app/controllers/AppointmentController';
 
 const routes = new Router();
 const upload = multer(multerConfig);
+
+// GET (Pegar): essa operação é utilizada para buscar algo
+// POST (Postar): essa operação é utilizada para criar algo
+// PUT (Colocar): essa operação é utilizada para criar e alterar algo
+// DELETE (Deletar): essa operação é utilizada para deletar algo
 
 routes.post('/users', UserController.store);
 routes.post('/sessions', SessionController.store);
@@ -17,8 +25,10 @@ routes.use(authMiddleware);
 
 routes.put('/users', UserController.update);
 
-routes.post('/files', upload.single('file'), (req, res) => {
-  return res.json({ ok: 'true' });
-});
+routes.get('/providers', ProviderController.index);
+
+routes.post('/appointments', AppointmentController.store);
+
+routes.post('/files', upload.single('file'), FileControlller.store);
 
 export default routes;

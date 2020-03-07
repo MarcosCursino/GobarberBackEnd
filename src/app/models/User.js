@@ -28,6 +28,13 @@ class User extends Model {
     return this;
   }
 
+  // belongsTo = pertece à
+  // as: = é um codinome
+
+  static associate(models) {
+    this.belongsTo(models.File, { foreignKey: 'avatar_id', as: 'avatar' });
+  }
+
   // compara os valores
   checkPassword(password) {
     return bcrypt.compare(password, this.password_hash);
